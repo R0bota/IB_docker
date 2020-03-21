@@ -26,7 +26,7 @@ describe('AppComponent', () => {
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
       ],
-      imports: [ RouterTestingModule.withRoutes([])],
+      imports: [RouterTestingModule.withRoutes([])],
     }).compileComponents();
   }));
 
@@ -50,8 +50,8 @@ describe('AppComponent', () => {
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
     expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].textContent).toContain('Inbox');
-    expect(menuItems[1].textContent).toContain('Outbox');
+    expect(menuItems[0].textContent).toContain('Immo1');
+    expect(menuItems[1].textContent).toContain('Immo2');
   });
 
   it('should have urls', async () => {
@@ -60,8 +60,8 @@ describe('AppComponent', () => {
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
     expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/folder/Inbox');
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/folder/Outbox');
+    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/folder/Immo1');
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/folder/Immo2');
   });
 
 });

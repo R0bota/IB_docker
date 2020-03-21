@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{room}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-tabs selectedIndex="0">
+    <ion-tab [root]="introduction" tabTitle="Introduction"></ion-tab>
+    <ion-tab [root]="form" tabTitle="Form"></ion-tab>
+    <ion-tab [root]="faq" tabTitle="FAQ"></ion-tab>
+  </ion-tabs> -->
+
+
+
+  <!-- Label only -->
+  <ion-segment value="info" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="info">
+      <ion-label>Info</ion-label>
+      <ion-icon name="information-circle-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="werte">
+      <ion-label>Werte</ion-label>
+      <ion-icon name="calculator-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="map">
+      <ion-label>Map</ion-label>
+      <ion-icon name="map-outline"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <ion-row class="ion-align-items-stretch ion-no-padding ion-justify-content-center">
+    <ion-col size="12" size-md="6" *ngIf="infoVisible">
+      <p>Info Tab wird angezeigt</p>
+      Grundriss:
+
+      <img src="../../../assets/img/bad.jpg" />
+
+
+    </ion-col>
+    <ion-col size="12" size-md="6" *ngIf="werteVisible">
+
+      <ion-list>
+        <ion-item>
+          <ion-label>Input</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Toggle</ion-label>
+          <ion-toggle slot="end"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Radio</ion-label>
+          <ion-radio slot="end"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Checkbox</ion-label>
+          <ion-checkbox slot="start"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+
+
+    </ion-col>
+    <ion-col size="12" size-md="6" *ngIf="mapVisible">
+      <p>Und jetzt der Maps Tab...was auch immer der soll</p>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
