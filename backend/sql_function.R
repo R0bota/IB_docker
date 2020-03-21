@@ -1,9 +1,5 @@
 #load libraries
 
-library(DBI)
-library(RODBC)
-library(RMySQL)
-
 getCredentials <- function(select){
  
   return(switch(select, 
@@ -46,6 +42,7 @@ sendQUery <- function(dbquery){
   dbDisconnect(connect) 
   return()
 }
+
 
 listTables <- function(){
   connect <- dbConnect(MySQL(), 
