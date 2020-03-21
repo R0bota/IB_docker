@@ -2,7 +2,7 @@
 #* @param userid 
 #* @get /userdata
 function(userid) {
-  
+  #userid = 1
   query <- paste("SELECT * from ibuser","WHERE userid = '",userid,"'") 
   
   connect <- dbConnect(MySQL(), 
