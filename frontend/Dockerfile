@@ -25,7 +25,8 @@ ENV IONIC_VERSION 4.12.0
 ENV PATH ${GRADLE_HOME}/bin:${JAVA_HOME}/bin:${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools:$PATH
 
 # INSTALL JAVA
-RUN apk update && apk add curl openjdk8-jre openjdk8
+RUN apk update && \
+  apk add curl openjdk8-jre openjdk8
 
 # INSTALL IONIC AND CORDOVA
 RUN npm install -g cordova ionic@${IONIC_VERSION}
@@ -38,9 +39,9 @@ RUN mkdir -p ${GRADLE_HOME} && \
   rm -r ${GRADLE_HOME}/gradle-${GRADLE_VERSION}/
 
 # INSTALL ANDROID
-#RUN mkdir -p ${ANDROID_HOME} && \
-#  curl -L https://dl.google.com/android/repository/tools_${ANDRDOID_TOOLS_VERSION}-linux.zip > /tmp/tools.zip && \
-#  unzip /tmp/tools.zip -d ${ANDROID_HOME}
+RUN mkdir -p ${ANDROID_HOME} && \
+  curl -L https://dl.google.com/android/repository/tools_${ANDRDOID_TOOLS_VERSION}-linux.zip > /tmp/tools.zip && \
+  unzip /tmp/tools.zip -d ${ANDROID_HOME}
 
 # INSTALL GLIBC
 RUN curl -L https://raw.githubusercontent.com/wassim6/alpine-pkg-glibc/master/sgerrand.rsa.pub > /etc/apk/keys/sgerrand.rsa.pub && \
@@ -49,15 +50,14 @@ RUN curl -L https://raw.githubusercontent.com/wassim6/alpine-pkg-glibc/master/sg
   apk add /tmp/glibc-bin.apk /tmp/glibc.apk
 
 # CONFIGURATION
-#RUN echo y | android update sdk --no-ui -a --filter platform-tools,${ANDROID_API_LEVELS},build-tools-${ANDROID_BUILD_TOOLS_VERSION}
+RUN echo y | android update sdk --no-ui -a --filter platform-tools,${ANDROID_API_LEVELS},build-tools-${ANDROID_BUILD_TOOLS_VERSION}
 
 # Make license agreement
-#RUN mkdir $ANDROID_HOME/licenses && \
-#    echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > $ANDROID_HOME/licenses/android-sdk-license && \
-#    echo d56f5187479451eabf01fb78af6dfcb131a6481e >> $ANDROID_HOME/licenses/android-sdk-license && \
-#    echo 24333f8a63b6825ea9c5514f83c2829b004d1fee >> $ANDROID_HOME/licenses/android-sdk-license && \
-#    echo 84831b9409646a918e30573bab4c9c91346d8abd > $ANDROID_HOME/licenses/android-sdk-preview-license
-
+RUN mkdir $ANDROID_HOME/licenses && \
+    echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > $ANDROID_HOME/licenses/android-sdk-license && \
+    echo d56f5187479451eabf01fb78af6dfcb131a6481e >> $ANDROID_HOME/licenses/android-sdk-license && \
+    echo 24333f8a63b6825ea9c5514f83c2829b004d1fee >> $ANDROID_HOME/licenses/android-sdk-license && \
+    echo 84831b9409646a918e30573bab4c9c91346d8abd > $ANDROID_HOME/licenses/android-sdk-preview-license
 
 #FILES DELETION
 RUN rm -rf /tmp/* /var/cache/apk/*
