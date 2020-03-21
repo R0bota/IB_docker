@@ -1,76 +1,60 @@
 #load libraries
-library(RPostgreSQL)
-#library(devtools)
-#library(remotes)
-#library(RPostgres)
-#library(DBI)
 
-
-
+library(DBI)
+library(RODBC)
+library(RMySQL)
 
 getCredentials <- function(select){
  
   return(switch(select, 
-                "user" = "user", 
-                "password" = "pw", 
-                "dbname" = "IB_docker",
-                "host"="localhost",
-                "port"= "1234",
-                "schema"="-c search_path="))
-  
+                "user" = "jopi", 
+                "password" = "jopi1234", 
+                "dbname" = "IB_DB",
+                "host"="192.168.178.19"))
+}
+
+getDatabasecon <- function(){
+  connect <- dbConnect(MySQL(), 
+                       user = getCredentials("user"), 
+                       password = getCredentials("password"), 
+                       dbname = getCredentials("dbname"),
+                       host=getCredentials("host"))
+  return(connect)
 }
 
 
-
-# functions
 getTableQuery <- function(dbquery){
-  tryCatch(
-    expr = {
-      db <- dbConnect(RPostgres::Postgres(), 
-                      dbname=getCredentials("dbname"), 
-                      host= getCredentials("host"), 
-                      port= getCredentials("port"), 
-                      user=getCredentials("user"), 
-                      password=getCredentials("password"), 
-                      options=getCredentials("schema"))
-      
-      df <- dbGetQuery(db,dbquery)
-    },
-    error = function(e){
-      #message('Caught an error!')
-      #print(e)
-      df <- ""
-    },
-    warning = function(w){
-      #message('Caught an warning!')
-      #print(w)
-      df <- ""
-    },
-    finally = {
-      #message('All done, quitting.')
-      dbDisconnect(db) 
-      
-    }
-  )    
+  connect <- dbConnect(MySQL(), 
+                       user = getCredentials("user"), 
+                       password = getCredentials("password"), 
+                       dbname = getCredentials("dbname"),
+                       host=getCredentials("host"))
+  on.exit(dbDisconnect(connect))
+  
+  df <- dbGetQuery(connect,dbquery)
+  dbDisconnect(connect) 
   return(df)
 }
 
-
 sendQUery <- function(dbquery){
-  
-  db <- dbConnect(RPostgres::Postgres(), 
-                  dbname=getCredentials("dbname"), 
-                  host= getCredentials("host"), 
-                  port= getCredentials("port"), 
-                  user=getCredentials("user"), 
-                  password=getCredentials("password"), 
-                  options=getCredentials("schema"))
-  
-  res <- dbSendQuery(db, dbquery)
-
+  connect <- dbConnect(MySQL(), 
+                       user = getCredentials("user"), 
+                       password = getCredentials("password"), 
+                       dbname = getCredentials("dbname"),
+                       host=getCredentials("host"))
+  res <- dbSendQuery(connect, dbquery)
+  dbDisconnect(connect) 
   return()
-  
 }
 
-
+listTables <- function(){
+  connect <- dbConnect(MySQL(), 
+                       user = getCredentials("user"), 
+                       password = getCredentials("password"), 
+                       dbname = getCredentials("dbname"),
+                       host=getCredentials("host"))
+  list <- dbGetQuery(connect,"SELECT table_name FROM information_schema.tables")
+  dbDisconnect(connect) 
+  return(list)
+}
 
