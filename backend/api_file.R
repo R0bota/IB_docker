@@ -71,15 +71,17 @@ function(l, w, name=""){
 
 #* @png
 #* @param roomid The id of the room
+#* @get /room_plot_id
 
 function(roomid){
+  #roomid=1
   query <- paste("SELECT * from room","WHERE userid3 = '",roomid,"'") 
   df_room <- getTableQuery(query)
   
   l = df_room$length
   w = df_room$width
   
-  d=data.frame(x1=c(0), x2=c(as.numeric(l)), y1=c(0), y2=c(as.numeric(w)), r=paste0(c(name), ", ", as.numeric(l)*as.numeric(w), " qm"))
+  d=data.frame(x1=c(0), x2=c(as.numeric(l)), y1=c(0), y2=c(as.numeric(w)), r=paste0(c(df_room$name), ", ", as.numeric(l)*as.numeric(w), " qm"))
   
   p <- ggplot() +
     scale_x_continuous(name="Length") + 
