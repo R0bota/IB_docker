@@ -1,29 +1,22 @@
-# parent image
-FROM resin/raspberrypi3-debian:latest
-#FROM rocker/r-ver:3.4.4
 
-ENTRYPOINT []
+# python base image
+FROM python:3.6
 
-# enable systemd
-ENV INITSYSTEM on
+# install flask
+RUN pip3 install Flask
+RUN pip3 install pymysql
+RUN pip3 install flask-mysql
+RUN pip3 install jsonify
 
-# update sources
-RUN echo "deb http://mirrordirector.raspbian.org/raspbian/ buster main" > /etc/apt/sources.list
+RUN useradd -ms /bin/bash admin
 
-# install R
-RUN apt-get update && apt-get install -y \ 
-  r-base \ 
-  r-base-core \
-  r-base-dev
-
-RUN R -e "options(repos = \
-  list(CRAN = 'http://cran.rstudio.com/')); \
-  install.packages('plumber')"
-
-# copy scripts from raspberry into container
-COPY src /usr/local/src/myscripts
+USER admin
 
 # set working directory
-WORKDIR /usr/local/src/myscripts
+WORKDIR /app
 
-CMD ["Rscript", "main.R"]
+# copy pytjon scripts to container
+COPY mySqlFlask /app
+
+# run flask app
+CMD ["python", "functions.py"]
