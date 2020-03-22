@@ -14,7 +14,7 @@ def rooms():
         cur.execute("SELECT * FROM room")
         rows = cur.fetchall()
         for x in rows:
-        print(x)
+            print(x)
         resp = jsonify(rows)
         resp.status_code = 200
         return resp
