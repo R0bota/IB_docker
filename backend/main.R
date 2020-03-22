@@ -8,8 +8,6 @@ library(RODBC)
 library(RMySQL)
 
 #load sql file
-
-
 source("backend/sql_function.R")
 
 #run api server

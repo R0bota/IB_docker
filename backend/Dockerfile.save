@@ -1,0 +1,14 @@
+# parent image
+#FROM resin/raspberrypi3-debian:latest
+FROM rocker/r-ver:3.4.4
+
+RUN R -e "options(repos = \
+  list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/${WHEN}')); \
+  install.packages('plumber')"
+
+# coopy scripts from raspberry into container
+COPY src /usr/local/src/myscripts
+
+# set workding directory
+
+CMD ["Rscript", "main.R"]

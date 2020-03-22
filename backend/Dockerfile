@@ -1,5 +1,6 @@
 # parent image
 FROM resin/raspberrypi3-debian:latest
+#FROM rocker/r-ver:3.4.4
 
 ENTRYPOINT []
 
@@ -15,13 +16,14 @@ RUN apt-get update && apt-get install -y \
   r-base-core \
   r-base-dev
 
+RUN R -e "options(repos = \
+  list(CRAN = 'http://cran.rstudio.com/')); \
+  install.packages('plumber')"
+
 # copy scripts from raspberry into container
 COPY src /usr/local/src/myscripts
 
 # set working directory
 WORKDIR /usr/local/src/myscripts
-
-RUN R -e "install.packages('plumber',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('swagger',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 
 CMD ["Rscript", "main.R"]
