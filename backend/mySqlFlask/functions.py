@@ -13,10 +13,11 @@ def rooms():
         cur = conn.cursor(pymysql.cursors.DictCursor)
         cur.execute("SELECT * FROM room")
         rows = cur.fetchall()
-        for x in rows:
-            print(x)
-        resp = jsonify(rows)
-        resp.status_code = 200
+        # for x in rows:
+        # print(x)
+        # resp = jsonify(rows)
+        resp = rows[0]
+        # resp.status_code = 200
         return resp
     except Exception as e:
         print(e)
@@ -46,7 +47,7 @@ def user():
 def not_found(error=None):
     message = {
         'status': 404,
-        'message': 'Not Found' + request.url,
+        'message': 'Verfickte Scheisse,  ' + request.url,
     }
     resp = jsonify(message)
     resp.status_code = 404
