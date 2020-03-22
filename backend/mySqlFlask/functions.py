@@ -13,6 +13,8 @@ def rooms():
         cur = conn.cursor(pymysql.cursors.DictCursor)
         cur.execute("SELECT * FROM room")
         rows = cur.fetchall()
+        for x in rows:
+        print(x)
         resp = jsonify(rows)
         resp.status_code = 200
         return resp
