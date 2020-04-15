@@ -44,7 +44,7 @@ def user():
 def not_found(error=None):
     message = {
         'status': 404,
-        'message': 'dd your mous,  ' + request.url,
+        'message': 'it worxx,  ' + request.url,
     }
     resp = jsonify(message)
     resp.status_code = 404
