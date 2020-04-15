@@ -2,12 +2,6 @@
 # python base image
 FROM python:3.6
 
-# install flask
-RUN pip3 install Flask
-RUN pip3 install pymysql
-RUN pip3 install flask-mysql
-RUN pip3 install jsonify
-
 RUN useradd -ms /bin/bash admin
 
 USER admin
@@ -16,7 +10,11 @@ USER admin
 WORKDIR /app
 
 # copy pytjon scripts to container
-COPY mySqlFlask /app
+ADD mySqlFlask /app
+ADD requirements.txt /app
+
+# install packages
+RUN pip3 install -r requirements.txt
 
 # run flask app
 CMD ["python", "functions.py"]

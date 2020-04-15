@@ -1,0 +1,8 @@
+[
+  {
+    "id": "redeploy",
+    "execute-command": "/home/pi/docker/deploy-folder/IB_docker/backend/redeploy.sh",
+    "command-working-directory": "/home/pi/docker/deploy-folder/IB_docker/backend",
+    "response-message": "Redeploying flask docker."
+  }
+]
